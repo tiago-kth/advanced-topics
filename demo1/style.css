@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --l: 128px;
+}
+
+body {
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.controls {
+    flex-grow: 0;
+}
+
+.plot {
+    flex-grow: 1;
+    position: relative;
+    height: 100%;
+    border: 2px solid tomato;
+}
+
+.plot .img {
+    --i: 0;
+    --j: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--l);
+    width: var(--l);
+    background-image: url(sprite-sheet.png);
+    background-position: calc(var(--i) * var(--l)) calc(var(--j) * var(--l));
+    background-size: var(--l) no-repeat; /*72 x 20*/
+
+}

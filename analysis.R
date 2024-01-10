@@ -6,7 +6,10 @@ library(tidyverse)
 # coil20 <- download_coil20(verbose = TRUE)
 # saveRDS(coil20, "coil20.rds")
 
-# a <- png::readPNG("./coil-20-proc/obj1__0.png")
+# sample <- png::readPNG("./coil-20-proc/obj1__0.png")
+
+# can skip everything and just load it from the saved file
+# df <- read_rds("raw-df.rds")
 
 files <- list.files("./coil-20-proc")
 
@@ -108,12 +111,13 @@ df <- df %>%
     
   )
 
+#saveRDS(df, "raw-df.rds")
 #a <- process_file("obj1__0.png")
 #coil20 <- readRDS("coil20.rds")
 #show_object(coil20, object = 4, pose = 0)
 
 library(Rtsne)
-
+#?Rtsne::Rtsne()
 coil20_no_label <- mat#coil20[,1:ncol(coil20)-1]
 
 normalized <- Rtsne::normalize_input(coil20_no_label)#as.matrix(coil20_no_label))
