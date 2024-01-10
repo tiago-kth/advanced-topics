@@ -118,6 +118,18 @@ fetch("coil20-data.json").then(response => response.json()).then(data => {
 
     const btns = document.querySelector('.btns-wrapper');
 
+    // populate the buttons
+    const perps = [1, 10, 36, 50, 72];
+    perps.forEach(p => {
+
+        const newButton = document.createElement('button');
+        newButton.classList.add('btn');
+        newButton.dataset.perp = p;
+        newButton.innerText = 'Perplexity: ' + p;
+        btns.appendChild(newButton);
+
+    })
+
     btns.addEventListener('click', clicked);
 
     function clicked(e) {
