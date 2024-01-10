@@ -4,7 +4,7 @@
 
 :root {
     --l: 128px;
-    --f: 0;
+    --f: 1;
 }
 
 body {
@@ -37,6 +37,25 @@ body {
     background-position: calc(var(--i) * var(--l)) calc(var(--j) * var(--l));
     background-size: var(--l) no-repeat; /*72 x 20*/
 
-    transform: scale(var(--f));
+    /*transform: scale(var(--f));*/
+    transition: transform .5s;
 
+    display: grid;
+    place-content: center;
+
+}
+
+.plot .img::after {
+    content : attr(data-label);
+    font-size: calc(var(--l));
+    opacity: 0;
+    transition: opacity .5s;
+}
+
+.plot.no-img .img {
+    background-image: none;
+}
+
+.plot.no-img .img::after {
+    opacity: 1;
 }

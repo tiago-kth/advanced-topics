@@ -9,10 +9,18 @@
 <body>
     <div class="controls">
         <h1>Demo 1 &mdash; COIL-20 Dataset</h1>
+        <select name="control-display" id="control-display">
+            <option value="img">Show images</option>
+            <option value="labels">Show labels</option>
+        </select>
+        <div class="btns-wrapper">
+            <button class="btn" data-perp="back">Initial</button>
+            <button class="btn" data-perp="1">Perplexity 1</button>
+            <button class="btn" data-perp="10">Perplexity 10</button>
+        </div>
     </div>
     <div class="plot">
-        <!--<div class="img">
-            <span class="label">1</span>
+        <!--<div class="img sample" data-label="1">
         </div>-->
 
     </div>

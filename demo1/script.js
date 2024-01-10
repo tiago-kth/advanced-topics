@@ -17,7 +17,7 @@ function pos_x(val){
     const range = [gap, W - gap];
     const domain = [-100,100];
 
-    return range[0] + val * (range[1] - range[0]) / (domain[1] - domain[0])
+    return ( range[0] - domain[0] + val ) * (range[1] - range[0]) / (domain[1] - domain[0])
 
 }
 
@@ -26,7 +26,7 @@ function pos_y(val) {
     const range = [gap, H - gap];
     const domain = [-100,100];
 
-    return range[0] + val * (range[1] - range[0]) / (domain[1] - domain[0])
+    return ( range[0] - domain[0] + val ) * (range[1] - range[0]) / (domain[1] - domain[0])
 
 }
 
@@ -73,11 +73,11 @@ fetch("coil20-data.json").then(response => response.json()).then(data => {
         const x = margin_left + (gap + l) * u;
         const y = margin_top + (gap + l) * v;
 
-        console.log(x,y);
-
         newDiv.classList.add('img');
         newDiv.dataset.index = i;
         newDiv.dataset.label = p.label;
+        newDiv.dataset.x0 = x;
+        newDiv.dataset.y0 = y;
         newDiv.style.setProperty('--i', u);
         newDiv.style.setProperty('--j', v);
         newDiv.style.transform = `translate(${x}px, ${y}px) scale(var(--f))`
@@ -86,6 +86,60 @@ fetch("coil20-data.json").then(response => response.json()).then(data => {
 
     })
 
+    const imgs = document.querySelectorAll('.img');
 
+    function applyPerplexity(perp) {
+
+        // perps: 1, 10, 36, 50, 72
+
+        imgs.forEach( (img,i) => {
+
+            let x,y;
+
+            if (perp == 'back') {
+
+                x = img.dataset.x0;
+                y = img.dataset.y0;
+
+            } else {
+
+                x = pos_x(data[i][`x${perp}`]);
+                y = pos_y(data[i][`y${perp}`]);
+
+            }
+
+            img.style.transform = `translate(${x}px, ${y}px) scale(var(--f))`;
+
+        })
+
+    }
+
+    // monitor
+
+    const btns = document.querySelector('.btns-wrapper');
+
+    btns.addEventListener('click', clicked);
+
+    function clicked(e) {
+
+        if (e.target.tagName == 'BUTTON') {
+
+            console.log('opa');
+
+            const btn = e.target;
+            const perp = btn.dataset.perp;
+
+            applyPerplexity(perp);
+
+        }
+
+    }
+
+    // control display
+
+    const selectControl = document.querySelector('#control-display');
+    selectControl.addEventListener('change', e => {
+        cont.classList.toggle('no-img');
+    })
 
 })
