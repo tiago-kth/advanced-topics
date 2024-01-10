@@ -27,6 +27,7 @@ body {
 .plot .img {
     --i: 0;
     --j: 0;
+    --s: var(--f); /* the scaling factor */
     position: absolute;
     transform-origin: 0 0;
     top: 0;
@@ -58,4 +59,11 @@ body {
 
 .plot.no-img .img::after {
     opacity: 1;
+}
+
+.plot .img:hover {
+    --s: 1;
+    z-index: 1000;
+    transition: transform 0s;
+
 }

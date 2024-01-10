@@ -94,7 +94,7 @@ fetch("coil20-data.json").then(response => response.json()).then(data => {
         newDiv.dataset.y0 = y;
         newDiv.style.setProperty('--i', u);
         newDiv.style.setProperty('--j', v);
-        newDiv.style.transform = `translate(${x}px, ${y}px) scale(var(--f))`;
+        newDiv.style.transform = `translate(${x}px, ${y}px) scale(var(--s))`;
         newDiv.style.color = colors[v];
 
         cont.appendChild(newDiv);
@@ -123,7 +123,7 @@ fetch("coil20-data.json").then(response => response.json()).then(data => {
 
             }
 
-            img.style.transform = `translate(${x}px, ${y}px) scale(var(--f))`;
+            img.style.transform = `translate(${x}px, ${y}px) scale(var(--s))`;
 
         })
 
