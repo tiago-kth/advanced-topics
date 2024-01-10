@@ -4,10 +4,11 @@
 
 :root {
     --l: 128px;
+    --f: 0;
 }
 
 body {
-    height: 95vh;
+    height: 98vh;
     display: flex;
     flex-direction: column;
 }
@@ -27,6 +28,7 @@ body {
     --i: 0;
     --j: 0;
     position: absolute;
+    transform-origin: 0 0;
     top: 0;
     left: 0;
     height: var(--l);
@@ -34,5 +36,7 @@ body {
     background-image: url(sprite-sheet.png);
     background-position: calc(var(--i) * var(--l)) calc(var(--j) * var(--l));
     background-size: var(--l) no-repeat; /*72 x 20*/
+
+    transform: scale(var(--f));
 
 }
