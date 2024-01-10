@@ -2,6 +2,8 @@ const plot = document.querySelector(".plot");
 const W = +window.getComputedStyle(plot).width.slice(0,-2);
 const H = +window.getComputedStyle(plot).height.slice(0,-2);
 
+const colors = ["#F8766D","#EA8331","#D89000","#C09B00","#A3A500","#7CAE00","#39B600","#00BB4E","#00BF7D","#00C1A3","#00BFC4","#00BAE0","#00B0F6","#35A2FF","#9590FF","#C77CFF","#E76BF3","#FA62DB","#FF62BC","#FF6A98"];
+
 const N = 20;
 const V = 72;
 
@@ -12,27 +14,39 @@ const h = H / 72;
 
 const gap = 2;
 
-function pos_x(val){
+const margin = 20;
 
-    const range = [gap, W - gap];
-    const domain = [-100,100];
+function pos_x(val, maxs){
 
-    return ( range[0] - domain[0] + val ) * (range[1] - range[0]) / (domain[1] - domain[0])
+    const range = [margin, W - margin];
+    const domain = [-maxs, maxs];
+
+    return ( range[0] + ( val - domain[0] ) * (range[1] - range[0]) / (domain[1] - domain[0]) )
 
 }
 
-function pos_y(val) {
+function pos_y(val, maxs) {
 
-    const range = [gap, H - gap];
-    const domain = [-100,100];
+    const range = [H - margin, margin];
+    const domain = [-maxs, maxs];
 
-    return ( range[0] - domain[0] + val ) * (range[1] - range[0]) / (domain[1] - domain[0])
+    return ( range[0] + ( val - domain[0] ) * (range[1] - range[0]) / (domain[1] - domain[0]) )
 
 }
 
 fetch("coil20-data.json").then(response => response.json()).then(data => {
 
     console.log(w, h, data);
+
+    const perps = [1, 10, 36, 50, 72];
+
+    const maxs = {};
+
+    perps.forEach(perp => {
+        maxs["max" + perp] = Math.max(...data.map( d => Math.abs(d["x" + perp]) ) , ...data.map( d => Math.abs(d["y" + perp]) ));
+    })
+
+    console.log(maxs);
 
     // ---- calcs
 
@@ -80,7 +94,8 @@ fetch("coil20-data.json").then(response => response.json()).then(data => {
         newDiv.dataset.y0 = y;
         newDiv.style.setProperty('--i', u);
         newDiv.style.setProperty('--j', v);
-        newDiv.style.transform = `translate(${x}px, ${y}px) scale(var(--f))`
+        newDiv.style.transform = `translate(${x}px, ${y}px) scale(var(--f))`;
+        newDiv.style.color = colors[v];
 
         cont.appendChild(newDiv);
 
@@ -103,8 +118,8 @@ fetch("coil20-data.json").then(response => response.json()).then(data => {
 
             } else {
 
-                x = pos_x(data[i][`x${perp}`]);
-                y = pos_y(data[i][`y${perp}`]);
+                x = pos_x(data[i][`x${perp}`], maxs["max" + perp]);
+                y = pos_y(data[i][`y${perp}`], maxs["max" + perp]);
 
             }
 
@@ -119,7 +134,6 @@ fetch("coil20-data.json").then(response => response.json()).then(data => {
     const btns = document.querySelector('.btns-wrapper');
 
     // populate the buttons
-    const perps = [1, 10, 36, 50, 72];
     perps.forEach(p => {
 
         const newButton = document.createElement('button');
