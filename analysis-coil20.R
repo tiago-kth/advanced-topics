@@ -1,14 +1,9 @@
 library(png)
 library(tidyverse)
 
-# devtools::install_github("jlmelville/coil20")
-# library(coil20)
-# coil20 <- download_coil20(verbose = TRUE)
-# saveRDS(coil20, "coil20.rds")
-
 # sample <- png::readPNG("./coil-20-proc/obj1__0.png")
 
-# can skip everything and just load it from the saved file
+# for further runs, can skip everything and just load it from the saved result file
 # df <- read_rds("raw-df.rds")
 
 files <- list.files("./coil-20-proc")
@@ -116,6 +111,9 @@ df <- df %>%
 #coil20 <- readRDS("coil20.rds")
 #show_object(coil20, object = 4, pose = 0)
 
+
+# run t-sne ---------------------------------------------------------------
+
 library(Rtsne)
 #?Rtsne::Rtsne()
 coil20_no_label <- mat#coil20[,1:ncol(coil20)-1]
@@ -173,6 +171,8 @@ jsonlite::write_json(visdata, "coil20-data.json")
 ggplot(visdata, aes(x72,y72)) + geom_text(aes(label = label, color = label))
 ggsave("coil20_perp72.png")
 
+
+# generate sprite sheet ---------------------------------------------------
 
 
 file_names <- visdata %>% select(label, view, filename) %>%
