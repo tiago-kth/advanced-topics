@@ -165,6 +165,7 @@ for (i in 1:length(results)) {
 }
 
 write_rds(visdata, "visdata.rds")
+#visdata <- read_rds("visdata.rds")
 
 jsonlite::write_json(visdata, "coil20-data.json")
 
