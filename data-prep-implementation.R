@@ -232,3 +232,4 @@ results %>% arrange(-ari)
 
 ggplot(results, aes(x = perplexity, y = epsilon, size = ari)) + geom_point()
 
+ggplot(results, aes(x = ari, y = 0)) + geom_jitter()
